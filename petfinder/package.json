@@ -27,6 +27,7 @@
   },
   "type": "module",
   "dependencies": {
+    "d3": "^7.8.5",
     "tcp-port-used": "^1.0.2"
   }
 }

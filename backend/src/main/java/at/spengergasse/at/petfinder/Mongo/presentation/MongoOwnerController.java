@@ -71,4 +71,11 @@ public class MongoOwnerController {
         ownerService.deleteOwner(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/test/{amount}")
+    public ResponseEntity<Owner> testWritings(@PathVariable int amount) {
+        ownerService.testWritings(amount);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }
