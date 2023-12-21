@@ -25,6 +25,12 @@ public class OwnerJPAController {
         return new ResponseEntity<>(createdOwner, HttpStatus.CREATED);
     }
 
+    @PostMapping("/test/{amount}")
+    public ResponseEntity<Owner> testWritings(@PathVariable int amount) {
+        ownerService.testWritings(amount);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Owner> getOwnerById(@PathVariable String id) {
         Optional<Owner> Owner = ownerService.getOwnerById(id);
