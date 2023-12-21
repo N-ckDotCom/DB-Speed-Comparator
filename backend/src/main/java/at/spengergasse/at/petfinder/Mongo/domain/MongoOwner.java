@@ -1,6 +1,7 @@
-package at.spengergasse.at.petfinder.domain;
+package at.spengergasse.at.petfinder.Mongo.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -11,16 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-@Document
-@Table
-@Entity
+@Document("MongoOwner")
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Owner {
+public class MongoOwner {
 
-    @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long jpaID;
     @Id
     private String id;
     @NonNull
@@ -28,8 +24,7 @@ public class Owner {
     @NonNull
     private int mana;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Pet> petList = new ArrayList<>();
+    private List<MongoPet> petList = new ArrayList<>();
 
 }
 

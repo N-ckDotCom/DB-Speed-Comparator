@@ -1,4 +1,4 @@
-package at.spengergasse.at.petfinder.domain;
+package at.spengergasse.at.petfinder;
 
 public enum PetType {
     DOG,

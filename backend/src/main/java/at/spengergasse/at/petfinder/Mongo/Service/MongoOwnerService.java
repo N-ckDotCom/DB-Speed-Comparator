@@ -1,40 +1,39 @@
-package at.spengergasse.at.petfinder.Service;
+package at.spengergasse.at.petfinder.Mongo.Service;
 
-import at.spengergasse.at.petfinder.domain.Owner;
-import at.spengergasse.at.petfinder.domain.Pet;
-import at.spengergasse.at.petfinder.domain.PetType;
-import at.spengergasse.at.petfinder.persistence.mongo.OwnerRepository;
+import at.spengergasse.at.petfinder.Mongo.domain.MongoOwner;
+import at.spengergasse.at.petfinder.Mongo.domain.MongoPet;
+import at.spengergasse.at.petfinder.Mongo.persistence.MongoOwnerRepository;
+import at.spengergasse.at.petfinder.PetType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class OwnerService {
+public class MongoOwnerService {
 
     @Autowired
-    private OwnerRepository ownerRepository;
+    private MongoOwnerRepository ownerRepository;
 
 
-    public Owner createOwner(Owner Owner) {
+    public MongoOwner createOwner(MongoOwner Owner) {
         return ownerRepository.save(Owner);
     }
 
-    public Optional<Owner> getOwnerById(String id) {
+    public Optional<MongoOwner> getOwnerById(String id) {
         return ownerRepository.findById(id);
     }
 
-    public List<Owner> getAllOwners() {
+    public List<MongoOwner> getAllOwners() {
         return ownerRepository.findAll();
     }
 
-    public Owner updateOwner(String id, String name, int mana) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(id);
+    public MongoOwner updateOwner(String id, String name, int mana) {
+        Optional<MongoOwner> optionalOwner = ownerRepository.findById(id);
         if (optionalOwner.isPresent()) {
-            Owner Owner = optionalOwner.get();
+            MongoOwner Owner = optionalOwner.get();
             Owner.setName(name);
             Owner.setMana(mana);
             return ownerRepository.save(Owner);
@@ -42,10 +41,10 @@ public class OwnerService {
         return null; // Handle not found case
     }
 
-    public Pet addPetToOwner(String OwnerId, Pet pet) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(OwnerId);
+    public MongoPet addPetToOwner(String OwnerId, MongoPet pet) {
+        Optional<MongoOwner> optionalOwner = ownerRepository.findById(OwnerId);
         if (optionalOwner.isPresent()) {
-            Owner Owner = optionalOwner.get();
+            MongoOwner Owner = optionalOwner.get();
             Owner.getPetList().add(pet);
             ownerRepository.save(Owner);
             return pet;
@@ -54,10 +53,10 @@ public class OwnerService {
     }
 
 
-    public void removePetFromOwner(String OwnerId, Pet pet) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(OwnerId);
+    public void removePetFromOwner(String OwnerId, MongoPet pet) {
+        Optional<MongoOwner> optionalOwner = ownerRepository.findById(OwnerId);
         if (optionalOwner.isPresent()) {
-            Owner Owner = optionalOwner.get();
+            MongoOwner Owner = optionalOwner.get();
             Owner.getPetList().remove(pet);
             ownerRepository.save(Owner);
         }
@@ -70,10 +69,10 @@ public class OwnerService {
 
     public void testWritings(int amount){
         for (int i = 0; i < amount; i++) {
-            Owner owner = new Owner("Owner" + i, ThreadLocalRandom.current().nextInt(1, 100));
+            MongoOwner owner = new MongoOwner("Owner" + i, ThreadLocalRandom.current().nextInt(1, 100));
 
             for (int j = 0; j < 3; j++) {
-                Pet pet = new Pet();
+                MongoPet pet = new MongoPet();
                 pet.setName("Pet" + j);
                 pet.setType(getRandomPetType());
                 pet.setAge(ThreadLocalRandom.current().nextInt(1, 10));

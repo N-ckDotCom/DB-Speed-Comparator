@@ -14,14 +14,20 @@ public class PetfinderApplication {
 	}
 
 	@Configuration
-	@EnableJpaRepositories(basePackages = "at.spengergasse.at.petfinder.persistence.jpa")
+	@EnableJpaRepositories(basePackages = "at.spengergasse.at.petfinder.JPA.persistence")
 	public class JpaConfig {
 
 	}
 
 	@Configuration
-	@EnableMongoRepositories(basePackages = "at.spengergasse.at.petfinder.persistence.mongo")
+	@EnableMongoRepositories(basePackages = "at.spengergasse.at.petfinder.Mongo.persistence")
 	public class MongoConfig {
+
+	}
+
+	@Configuration
+	@EnableMongoRepositories(basePackages = "at.spengergasse.at.petfinder.mongoReferencing.persistence")
+	public class MongoReferencingConfig {
 
 	}
 }

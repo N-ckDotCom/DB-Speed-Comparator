@@ -1,8 +1,7 @@
-package at.spengergasse.at.petfinder.persistence;
+package at.spengergasse.at.petfinder;
 
 
-import at.spengergasse.at.petfinder.domain.Pet;
-import at.spengergasse.at.petfinder.domain.PetType;
+import at.spengergasse.at.petfinder.PetType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
