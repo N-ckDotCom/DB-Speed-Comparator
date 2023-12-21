@@ -84,7 +84,7 @@ public class MongoOwnerService {
         }
     }
 
-    public Optional<Owner> getOwnerByName(String name) {
+    public Optional<MongoOwner> getOwnerByName(String name) {
         return ownerRepository.findFirstByName(name);
     }
     private PetType getRandomPetType() {

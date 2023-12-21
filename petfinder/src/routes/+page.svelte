@@ -3,6 +3,7 @@
 
   import {
     Button,
+    Checkbox,
     Input,
     Label,
     Range,
@@ -29,6 +30,8 @@
   let method = "POST";
 
   let name = "";
+
+  let referencing = false;
 
   let methods = [
     { value: "POST", name: "POST" },
@@ -65,19 +68,25 @@
       Method
       <Select class="mt-2" items={methods} bind:value={method} />
     </Label>
+    <Checkbox bind:value={referencing}>Mongo Referencing</Checkbox>
     {#if method === "POST"}
       <Button
         on:click={async () => {
           if (testing) return;
           testing = true;
           const startMongo = performance.now();
-          await fetch("http://localhost:8080/api/owners/test/" + amount, {
-            method: "POST",
-          });
+          await fetch(
+            "http://localhost:8080/api/" + (referencing
+              ? "mongoReferencingOwners"
+              : "mongoOwners") + "/test/" + amount,
+            {
+              method: "POST",
+            }
+          );
           const stopMongo = performance.now();
 
           const startJPA = performance.now();
-          await fetch("http://localhost:8080/api/ownersJPA/test/" + amount, {
+          await fetch("http://localhost:8080/api/jpaOwners/test/" + amount, {
             method: "POST",
           });
           const stopJPA = performance.now();
@@ -90,7 +99,7 @@
             { database: "Mongo", time: mongoTime },
             { database: "Postgres", time: jpaTime },
           ];
-          title = "Time it took to insert " + amount + " Entities"
+          title = "Time it took to insert " + amount + " Entities";
           testing = false;
         }}
       >
@@ -106,13 +115,18 @@
           if (testing) return;
           testing = true;
           const startMongo = performance.now();
-          await fetch("http://localhost:8080/api/owners/name/" + name, {
-            method: "GET",
-          });
+          await fetch(
+            "http://localhost:8080/api/" + (referencing
+              ? "mongoReferencingOwners"
+              : "mongoOwners") + "/name/" + name,
+            {
+              method: "GET",
+            }
+          );
           const stopMongo = performance.now();
 
           const startJPA = performance.now();
-          await fetch("http://localhost:8080/api/ownersJPA/name/" + name, {
+          await fetch("http://localhost:8080/api/jpaOwners/name/" + name, {
             method: "GET",
           });
           const stopJPA = performance.now();
@@ -125,7 +139,7 @@
             { database: "Mongo", time: mongoTime },
             { database: "Postgres", time: jpaTime },
           ];
-          title = "Time it took to find " + name
+          title = "Time it took to find " + name;
           testing = false;
         }}
       >
@@ -140,7 +154,7 @@
   <div
     class="bg-slate-50 flex flex-col items-center justify-center dark:bg-slate-800 p-3 rounded-xl w-[1100px] h-[600px]"
   >
-  <h1 class="font-medium">{title}</h1>
+    <h1 class="font-medium">{title}</h1>
     {#if data !== null}
       {#key data}
         <BarChart {data}></BarChart>

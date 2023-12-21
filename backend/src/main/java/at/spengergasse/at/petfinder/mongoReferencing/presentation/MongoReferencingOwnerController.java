@@ -1,5 +1,6 @@
 package at.spengergasse.at.petfinder.mongoReferencing.presentation;
 
+import at.spengergasse.at.petfinder.Mongo.domain.MongoOwner;
 import at.spengergasse.at.petfinder.mongoReferencing.Service.MongoReferencingOwnerService;
 import at.spengergasse.at.petfinder.mongoReferencing.domain.MongoReferencingOwner;
 import at.spengergasse.at.petfinder.mongoReferencing.domain.MongoReferencingPet;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/mongoReferencingOwners")
+@CrossOrigin(origins = "*")
 public class MongoReferencingOwnerController {
 
     @Autowired
@@ -23,6 +25,13 @@ public class MongoReferencingOwnerController {
     public ResponseEntity<MongoReferencingOwner> createOwner(@RequestBody MongoReferencingOwner Owner) {
         MongoReferencingOwner createdOwner = mongoReferencingOwnerService.createOwner(Owner);
         return new ResponseEntity<>(createdOwner, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<MongoReferencingOwner> getOwnerByName(@PathVariable String name) {
+        Optional<MongoReferencingOwner> Owner = mongoReferencingOwnerService.getOwnerByName(name);
+        return Owner.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/{id}")
@@ -72,4 +81,11 @@ public class MongoReferencingOwnerController {
         mongoReferencingOwnerService.deleteOwner(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/test/{amount}")
+    public ResponseEntity<MongoOwner> testWritings(@PathVariable int amount) {
+        mongoReferencingOwnerService.testWritings(amount);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }

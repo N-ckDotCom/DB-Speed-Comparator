@@ -28,7 +28,7 @@ public class OwnerJPAService {
         return ownerRepository.findById(id);
     }
 
-    public Optional<Owner> getOwnerByName(String name) {
+    public Optional<JPAOwner> getOwnerByName(String name) {
         return ownerRepository.findFirstByName(name);
     }
     
