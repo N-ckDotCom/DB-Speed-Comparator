@@ -67,7 +67,6 @@ public class OwnerJPAService {
         for (int i = 0; i < amount; i++) {
             Owner owner = new Owner("Owner" + i, ThreadLocalRandom.current().nextInt(1, 100));
 
-
             for (int j = 0; j < 3; j++) {
                 Pet pet = new Pet();
                 pet.setName("Pet" + j);

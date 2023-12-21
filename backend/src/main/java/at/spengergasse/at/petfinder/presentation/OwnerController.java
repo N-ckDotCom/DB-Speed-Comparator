@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/owners")
+@CrossOrigin(origins = "*")
 public class OwnerController {
 
     @Autowired
@@ -71,4 +72,11 @@ public class OwnerController {
         ownerService.deleteOwner(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/test/{amount}")
+    public ResponseEntity<Owner> testWritings(@PathVariable int amount) {
+        ownerService.testWritings(amount);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }

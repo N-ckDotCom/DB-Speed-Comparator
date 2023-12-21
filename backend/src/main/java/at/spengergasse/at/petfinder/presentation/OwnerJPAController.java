@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ownersJPA")
+@CrossOrigin(origins = "*")
 public class OwnerJPAController {
 
     @Autowired
