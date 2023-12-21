@@ -25,7 +25,7 @@ public class Owner {
     @NonNull
     private int mana;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Pet> petList = new ArrayList<>();
 
 }
