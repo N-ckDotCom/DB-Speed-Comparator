@@ -73,7 +73,7 @@ public class MongoOwnerController {
     }
 
     @PostMapping("/test/{amount}")
-    public ResponseEntity<Owner> testWritings(@PathVariable int amount) {
+    public ResponseEntity<MongoOwner> testWritings(@PathVariable int amount) {
         ownerService.testWritings(amount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
