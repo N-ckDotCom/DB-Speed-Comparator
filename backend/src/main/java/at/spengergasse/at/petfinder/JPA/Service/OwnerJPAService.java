@@ -1,15 +1,16 @@
-package at.spengergasse.at.petfinder.Service;
+package at.spengergasse.at.petfinder.JPA.Service;
 
-import at.spengergasse.at.petfinder.domain.Owner;
-import at.spengergasse.at.petfinder.domain.Pet;
-import at.spengergasse.at.petfinder.domain.PetType;
-import at.spengergasse.at.petfinder.persistence.jpa.OwnerJPARepository;
+import at.spengergasse.at.petfinder.JPA.domain.JPAOwner;
+import at.spengergasse.at.petfinder.JPA.domain.JPAPet;
+import at.spengergasse.at.petfinder.PetType;
+
+import at.spengergasse.at.petfinder.JPA.persistence.OwnerJPARepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -18,23 +19,23 @@ public class OwnerJPAService {
     @Autowired
     private OwnerJPARepository ownerRepository;
 
-    public Owner createOwner(Owner Owner) {
-        Owner.setId(UUID.randomUUID().toString());
+    public JPAOwner createOwner(JPAOwner Owner) {
+
         return ownerRepository.saveAndFlush(Owner);
     }
 
-    public Optional<Owner> getOwnerById(String id) {
+    public Optional<JPAOwner> getOwnerById(String id) {
         return ownerRepository.findById(id);
     }
 
-    public List<Owner> getAllOwners() {
+    public List<JPAOwner> getAllOwners() {
         return ownerRepository.findAll();
     }
 
-    public Owner updateOwner(String id, String name, int mana) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(id);
+    public JPAOwner updateOwner(String id, String name, int mana) {
+        Optional<JPAOwner> optionalOwner = ownerRepository.findById(id);
         if (optionalOwner.isPresent()) {
-            Owner Owner = optionalOwner.get();
+            JPAOwner Owner = optionalOwner.get();
             Owner.setName(name);
             Owner.setMana(mana);
             return ownerRepository.saveAndFlush(Owner);
@@ -42,10 +43,10 @@ public class OwnerJPAService {
         return null; // Handle not found case
     }
 
-    public Pet addPetToOwner(String OwnerId, Pet pet) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(OwnerId);
+    public JPAPet addPetToOwner(String OwnerId, JPAPet pet) {
+        Optional<JPAOwner> optionalOwner = ownerRepository.findById(OwnerId);
         if (optionalOwner.isPresent()) {
-            Owner Owner = optionalOwner.get();
+            JPAOwner Owner = optionalOwner.get();
             Owner.getPetList().add(pet);
             ownerRepository.saveAndFlush(Owner);
             return pet;
@@ -54,10 +55,10 @@ public class OwnerJPAService {
     }
 
 
-    public void removePetFromOwner(String OwnerId, Pet pet) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(OwnerId);
+    public void removePetFromOwner(String OwnerId, JPAPet pet) {
+        Optional<JPAOwner> optionalOwner = ownerRepository.findById(OwnerId);
         if (optionalOwner.isPresent()) {
-            Owner Owner = optionalOwner.get();
+            JPAOwner Owner = optionalOwner.get();
             Owner.getPetList().remove(pet);
             ownerRepository.saveAndFlush(Owner);
         }
@@ -65,11 +66,11 @@ public class OwnerJPAService {
 
     public void testWritings(int amount){
         for (int i = 0; i < amount; i++) {
-            Owner owner = new Owner("Owner" + i, ThreadLocalRandom.current().nextInt(1, 100));
+            JPAOwner owner = new JPAOwner("Owner" + i, ThreadLocalRandom.current().nextInt(1, 100));
 
 
             for (int j = 0; j < 3; j++) {
-                Pet pet = new Pet();
+                JPAPet pet = new JPAPet();
                 pet.setName("Pet" + j);
                 pet.setType(getRandomPetType());
                 pet.setAge(ThreadLocalRandom.current().nextInt(1, 10));

@@ -1,8 +1,8 @@
-package at.spengergasse.at.petfinder.presentation;
+package at.spengergasse.at.petfinder.Mongo.presentation;
 
-import at.spengergasse.at.petfinder.Service.OwnerService;
-import at.spengergasse.at.petfinder.domain.Owner;
-import at.spengergasse.at.petfinder.domain.Pet;
+import at.spengergasse.at.petfinder.Mongo.Service.MongoOwnerService;
+import at.spengergasse.at.petfinder.Mongo.domain.MongoOwner;
+import at.spengergasse.at.petfinder.Mongo.domain.MongoPet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,47 +12,47 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/owners")
-public class OwnerController {
+@RequestMapping("/api/mongoOwners")
+public class MongoOwnerController {
 
     @Autowired
-    private OwnerService ownerService;
+    private MongoOwnerService ownerService;
 
     @PostMapping
-    public ResponseEntity<Owner> createOwner(@RequestBody Owner Owner) {
-        Owner createdOwner = ownerService.createOwner(Owner);
+    public ResponseEntity<MongoOwner> createOwner(@RequestBody MongoOwner Owner) {
+        MongoOwner createdOwner = ownerService.createOwner(Owner);
         return new ResponseEntity<>(createdOwner, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Owner> getOwnerById(@PathVariable String id) {
-        Optional<Owner> Owner = ownerService.getOwnerById(id);
+    public ResponseEntity<MongoOwner> getOwnerById(@PathVariable String id) {
+        Optional<MongoOwner> Owner = ownerService.getOwnerById(id);
         return Owner.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<List<Owner>> getAllOwners() {
-        List<Owner> owners = ownerService.getAllOwners();
+    public ResponseEntity<List<MongoOwner>> getAllOwners() {
+        List<MongoOwner> owners = ownerService.getAllOwners();
         return new ResponseEntity<>(owners, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Owner> updateOwner(
+    public ResponseEntity<MongoOwner> updateOwner(
             @PathVariable String id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) int mana) {
-        Owner updatedOwner = ownerService.updateOwner(id, name, mana);
+        MongoOwner updatedOwner = ownerService.updateOwner(id, name, mana);
         return updatedOwner != null
                 ? new ResponseEntity<>(updatedOwner, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/{OwnerId}/pet")
-    public ResponseEntity<Pet> addPetToOwner(
+    public ResponseEntity<MongoPet> addPetToOwner(
             @PathVariable String OwnerId,
-            @RequestBody Pet pet) {
-        Pet createdPet = ownerService.addPetToOwner(OwnerId, pet);
+            @RequestBody MongoPet pet) {
+        MongoPet createdPet = ownerService.addPetToOwner(OwnerId, pet);
         return createdPet != null
                 ? new ResponseEntity<>(createdPet, HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,7 +61,7 @@ public class OwnerController {
     @DeleteMapping("/{OwnerId}/pet")
     public ResponseEntity<Void> removePetFromOwner(
             @PathVariable String OwnerId,
-            @RequestBody Pet pet) {
+            @RequestBody MongoPet pet) {
         ownerService.removePetFromOwner(OwnerId, pet);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
