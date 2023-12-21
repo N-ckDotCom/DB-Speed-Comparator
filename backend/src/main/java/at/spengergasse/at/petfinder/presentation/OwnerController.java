@@ -32,6 +32,13 @@ public class OwnerController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Owner> getOwnerByName(@PathVariable String name) {
+        Optional<Owner> Owner = ownerService.getOwnerByName(name);
+        return Owner.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
     @GetMapping
     public ResponseEntity<List<Owner>> getAllOwners() {
         List<Owner> owners = ownerService.getAllOwners();

@@ -85,6 +85,9 @@ public class OwnerService {
         }
     }
 
+    public Optional<Owner> getOwnerByName(String name) {
+        return ownerRepository.findFirstByName(name);
+    }
     private PetType getRandomPetType() {
         PetType[] petTypes = PetType.values();
         int randomIndex = ThreadLocalRandom.current().nextInt(petTypes.length);
