@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface OwnerRepository extends MongoRepository<Owner, String> {
 
-
 }
