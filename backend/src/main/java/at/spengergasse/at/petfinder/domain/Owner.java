@@ -17,8 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class Owner {
-    @Id
+
     @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long jpaID;
+    @Id
     private String id;
     @NonNull
     private String name;
