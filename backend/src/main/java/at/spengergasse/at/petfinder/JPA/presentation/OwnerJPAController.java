@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/jpaOwners")
+@CrossOrigin(origins = "*")
 public class OwnerJPAController {
 
     @Autowired
@@ -33,6 +34,13 @@ public class OwnerJPAController {
     @GetMapping("/{id}")
     public ResponseEntity<JPAOwner> getOwnerById(@PathVariable String id) {
         Optional<JPAOwner> Owner = ownerService.getOwnerById(id);
+        return Owner.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<JPAOwner> getOwnerByName(@PathVariable String name) {
+        Optional<JPAOwner> Owner = ownerService.getOwnerByName(name);
         return Owner.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

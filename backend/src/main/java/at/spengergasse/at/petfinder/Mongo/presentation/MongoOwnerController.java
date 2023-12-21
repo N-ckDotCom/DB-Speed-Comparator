@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/mongoOwners")
+@CrossOrigin(origins = "*")
 public class MongoOwnerController {
 
     @Autowired
@@ -31,6 +32,13 @@ public class MongoOwnerController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<MongoOwner> getOwnerByName(@PathVariable String name) {
+        Optional<MongoOwner> Owner = ownerService.getOwnerByName(name);
+        return Owner.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
     @GetMapping
     public ResponseEntity<List<MongoOwner>> getAllOwners() {
         List<MongoOwner> owners = ownerService.getAllOwners();

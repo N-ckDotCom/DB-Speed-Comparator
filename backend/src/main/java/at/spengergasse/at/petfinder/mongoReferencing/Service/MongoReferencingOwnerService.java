@@ -1,6 +1,7 @@
 package at.spengergasse.at.petfinder.mongoReferencing.Service;
 
 
+import at.spengergasse.at.petfinder.Mongo.domain.MongoOwner;
 import at.spengergasse.at.petfinder.PetType;
 import at.spengergasse.at.petfinder.mongoReferencing.domain.MongoReferencingOwner;
 import at.spengergasse.at.petfinder.mongoReferencing.domain.MongoReferencingPet;
@@ -85,6 +86,11 @@ public class MongoReferencingOwnerService {
         }
     }
 
+
+
+    public Optional<MongoReferencingOwner> getOwnerByName(String name) {
+        return mongoReferencingOwnerRepository.findFirstByName(name);
+    }
     private PetType getRandomPetType() {
         PetType[] petTypes = PetType.values();
         int randomIndex = ThreadLocalRandom.current().nextInt(petTypes.length);

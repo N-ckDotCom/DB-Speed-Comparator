@@ -28,6 +28,10 @@ public class OwnerJPAService {
         return ownerRepository.findById(id);
     }
 
+    public Optional<JPAOwner> getOwnerByName(String name) {
+        return ownerRepository.findFirstByName(name);
+    }
+    
     public List<JPAOwner> getAllOwners() {
         return ownerRepository.findAll();
     }
