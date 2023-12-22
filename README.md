@@ -39,7 +39,7 @@ Additional sections could cover:
 ## Database-Model
 ```mermaid
 erDiagram
-    Owner }|..|{ Pet : Owns
+    Owner ||--|{ Pet : Owns 
     Owner {
         string id
         string name
@@ -53,6 +53,7 @@ erDiagram
         float weight 
         float height
     }
+
 ```
 
 
