@@ -158,6 +158,8 @@
     {#if data !== null}
       {#key data}
         <BarChart {data}></BarChart>
+        <div class="text-sm gap-1 flex justify-center items-center">Postgres takes  <p class={Math.floor((data[1].time/data[0].time-1)*100) > 0 ? "text-green-500" : "text-red-500"}> {Math.floor((data[1].time/data[0].time-1)*100)}%</p> {Math.floor((data[1].time/data[0].time-1)*100) > 0 ? "longer" : "less"} than Mongo</div>
+
       {/key}
     {/if}
   </div>
