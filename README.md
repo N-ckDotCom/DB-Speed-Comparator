@@ -36,8 +36,6 @@ The homepage provides controls to:
 - Input parameters like amount to insert or name to find
 - Display performance comparison chart with D3
 
-Additional sections could cover:
-
 ## Database-Model
 ```mermaid
 erDiagram
