@@ -59,8 +59,6 @@ erDiagram
 
 - More details on the performance test flows 📈
 
-Excellent suggestion! Here is an updated "Areas for Enhancement" section focusing on expanding the frontend CRUD capabilities:
-
 ## Areas for Enhancement (Please PR🥺)
 
 Some areas that could be expanded on:
@@ -72,7 +70,6 @@ Some areas that could be expanded on:
 - CRUD operations for pets 🐾
 - Manage relationships between owners and pets 💑
 
-This would build out the Svelte frontend to have full CRUD (Create, Read, Update, Delete) coverage for interacting with the owners and pets test data.
 
 Additional ideas could include:
 
